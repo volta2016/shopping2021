@@ -1,29 +1,33 @@
 import React from 'react'
-import {link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { auth }  from '../../firebase/firebase.util';
-import { ReactComponent as logo } from '../../assets/crown.svg'
+import { ReactComponent as Logo } from '../../assets/crown.svg'
 import './header.scss'
 
 const Header = ({ currentUser }) =>  (
   <div className="header">
-    <link className="options" to="/">
-      <logo className="logo" />
-    </link>
-    <link className="options" to="/">
-      SHOP
-    </link>
-    <link className="options" to="/">
-      CONTACT
-    </link>
-    {current ? (
-      <div className="option" onClick={() => auth.signOut()}>
-        SIGN PUT
-      </div>
-    ) : (
-      <link to="/singin" />
-    )
+    <Link className="logo-container" to="/">
+      <Logo className="logo" />
+    </Link>
+    <div className="options">
+      <Link className="option" to="/shop">
+        SHOP
+      </Link>
+      <Link className="option" to="/contact">
+        CONTACT
+      </Link>
+      {currentUser ? (
+          <div className="option" onClick={() => auth.signOut()}>
+            SIGN OUT
+          </div>
+        ) : (
+          <Link className="option" to="/signin">
+            SIGN IN
+          </Link>
+        )
+      }
+    </div>
     
-    }
    
   </div>
   
@@ -42,6 +46,13 @@ export default Header;
 //     </div>
 //   )
 // }//tema de lógica con parentesis
+
+// export function Header = () => {
+//   return (
+//     <div>
+//     </div>
+//   )
+// }
 
 //const Header = () =>  ( ) //para tema visuales 
 

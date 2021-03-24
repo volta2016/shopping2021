@@ -1,4 +1,4 @@
-import firebase, { firestore } from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/firestore';//apunta ala carpeta de doc y col
 import 'firebase/auth';
 
@@ -18,14 +18,15 @@ const firebaseConfig = {
  firebase.initializeApp(firebaseConfig);
 
  //2 param que siempre vienen
- export const createUserProfileDocument = async (userAuth, ...aditionalData) =>  {
-   if(!userAuth) return;
+ export const createUserProfileDocument = async (userAuth, ...additionalData) =>  {
+   
+  if(!userAuth) return;
 
    const userRef = firestore.doc(`users/${userAuth.uid}`)
 
-   const snapshot = await useRef.get()//obtener ref de user > obtiene una estructura de docu si existe o no
+   const snapShot = await userRef.get()//obtener ref de user > obtiene una estructura de docu si existe o no
 
-   if(!snapshot.exist) {
+   if(!snapShot.exist) {
       //si no existe vamos a creart un context para el user
       const { displayName, email} = userAuth;//datos de user autenticado
       const createAt = new Date();
@@ -35,7 +36,6 @@ const firebaseConfig = {
           email,
           createAt,
           ...additionalData
-
         });
       } catch(error) {
         console.log('error creating user', error.message)
@@ -45,10 +45,11 @@ const firebaseConfig = {
    return userRef;
  };
 
- export const auth = firebase.auth();
- export const firestore = firebase.firestore();
+ export const auth = firebase.auth();//ref servicios de auth
+ export const firestore = firebase.firestore();//proceso de funciones firebase & firstore
  
- const provider = new firebase.auth.GoogleAuhProvider();// new isntacia de autentificación firebase
+//Definición proveedores de auth
+ const provider = new firebase.auth.GoogleAuthProvider();// new isntacia de autentificación firebase
  provider.setCustomParameters({ prompt: 'select_acount'});
 
  export const signInWithGoogle = () => auth.signInWithPoup(provider);//te devuelve un pop con el proveedor
