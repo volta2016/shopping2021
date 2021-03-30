@@ -30,7 +30,6 @@ class App extends React.Component {
               ...snapShot.data()
             }//modifique el state de mi currentUser
           });
-          console.log(this.state)
         });
       }
       this.setState({current: userAuth});//asignación completa

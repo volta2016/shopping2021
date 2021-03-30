@@ -3,7 +3,7 @@ import './sing-in-and-sing-up.scss';
 
 import SignIn from '../../components/sign-in/sign-in';
 import SignUp from '../../components/sign-up/sing-up';
-import { signInWithGoogle } from '../../firebase/firebase.util';
+
 
 const SignInAndSignUpPage = () => {
   return (

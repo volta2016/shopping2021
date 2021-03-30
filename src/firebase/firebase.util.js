@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+import firebase from "firebase/app";
 import 'firebase/firestore';//apunta ala carpeta de doc y col
 import 'firebase/auth';
 
@@ -18,24 +18,24 @@ const firebaseConfig = {
  firebase.initializeApp(firebaseConfig);
 
  //2 param que siempre vienen
- export const createUserProfileDocument = async (userAuth, ...additionalData) =>  {
+ export const createUserProfileDocument = async (userAuth, additionalData) =>  {
    
   if(!userAuth) return;
 
    const userRef = firestore.doc(`users/${userAuth.uid}`)
 
-   const snapShot = await userRef.get()//obtener ref de user > obtiene una estructura de docu si existe o no
+   const snapShot = await userRef.get();//obtener ref de user > obtiene una estructura de docu si existe o no
 
    if(!snapShot.exist) {
       //si no existe vamos a creart un context para el user
-      const { displayName, email} = userAuth;//datos de user autenticado
-      const createAt = new Date();
+      const { displayName, email } = userAuth;//datos de user autenticado
+      const createdAt = new Date();
       try {
         await userRef.set({
-          displayName,
-          email,
-          createAt,
-          ...additionalData
+            displayName, 
+            email,
+            createdAt,
+            ...additionalData
         });
       } catch(error) {
         console.log('error creating user', error.message)
@@ -46,13 +46,13 @@ const firebaseConfig = {
  };
 
  export const auth = firebase.auth();//ref servicios de auth
- export const firestore = firebase.firestore();//proceso de funciones firebase & firstore
+ export const firestore = firebase.firestore();//proceso de funciones firebase & firestore
  
 //Definición proveedores de auth
- const provider = new firebase.auth.GoogleAuthProvider();// new isntacia de autentificación firebase
- provider.setCustomParameters({ prompt: 'select_acount'});
+ const provider = new firebase.auth.GoogleAuthProvider();// new instancia de autentificación firebase
+ provider.setCustomParameters({ prompt: 'select_account '});
 
- export const signInWithGoogle = () => auth.signInWithPoup(provider);//te devuelve un pop con el proveedor
+ export const signInWithGoogle = () => auth.signInWithPopup(provider);//te devuelve un pop con el proveedor
 
 
  export default firebase;
